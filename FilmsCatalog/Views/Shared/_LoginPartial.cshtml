@@ -5,22 +5,23 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    User user = await UserManager.GetUserAsync(User);
     <li class="nav-item">
-        <span  class="nav-link text-dark">Привет, @User.Identity.Name!</span>
+        <span  class="nav-link text-white">Привет, @user.GetUserName()!</span>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-controller="Account" asp-action="LogOut" asp-route-returnUrl="@Url.Action("Index", "Home")">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Выход</button>
+            <button  type="submit" class="nav-link btn btn-link text-white">Выход</button>
         </form>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="SignUp">Регистрация</a>
+        <a class="nav-link text-white" asp-controller="Account" asp-action="SignUp">Регистрация</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="SignIn">Вход</a>
+        <a class="nav-link text-white" asp-controller="Account" asp-action="SignIn">Вход</a>
     </li>
 }
 </ul>

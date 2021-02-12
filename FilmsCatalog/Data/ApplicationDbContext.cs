@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FilmsCatalog.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using FilmsCatalog.Models;
 
 namespace FilmsCatalog.Data
 {
@@ -13,5 +10,7 @@ namespace FilmsCatalog.Data
             : base(options)
         {
         }
+
+        public DbSet<Film> Films { get; set; }
     }
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace FilmsCatalog.Models
 {
     public class ErrorViewModel
