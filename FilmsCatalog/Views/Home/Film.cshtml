@@ -7,6 +7,7 @@
 }
 
 <form asp-controller="Home" asp-action="@(isNewFilm ? "CreateFilm": "UpdateFilm")" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
     <input name="PosterImageBase64WithMimeType" value="@Model.PosterImageBase64WithMimeType" hidden />
 
     <div class="w-100">

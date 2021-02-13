@@ -20,6 +20,7 @@ namespace FilmsCatalog.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction("GetFilms");
@@ -49,6 +50,11 @@ namespace FilmsCatalog.Controllers
         public async Task<IActionResult> DisplayFilm(int filmId)
         {
             var film = await _repository.ReadAsync(filmId);
+            if (film == null)
+            {
+                return new BadRequestResult();
+            }
+
             return View("Film", GetFilmViewModel(film, null, true));
         }
 
@@ -61,6 +67,7 @@ namespace FilmsCatalog.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFilm(FilmViewModel model)
         {
             byte[] imageData = null;
@@ -109,15 +116,22 @@ namespace FilmsCatalog.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateFilm(int filmId = 0)
         {
-            var user = await _userManager.GetUserAsync(this.User);
             var film = await _repository.ReadAsync(filmId);
+            if (film == null)
+            {
+                return new BadRequestResult();
+            }
+
+            var user = await _userManager.GetUserAsync(this.User);
             return View("Film", GetFilmViewModel(film, user, true));
         }
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateFilm(FilmViewModel model)
         {
             byte[] imageData = null;

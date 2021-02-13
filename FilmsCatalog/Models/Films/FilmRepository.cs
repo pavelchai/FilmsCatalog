@@ -41,7 +41,7 @@ namespace FilmsCatalog.Models
 
         public IAsyncEnumerable<Film> GetFilms(int offset = 0, int count = int.MaxValue)
         {
-            return this.context.Films.AsNoTracking().Skip(offset).Take(count).AsAsyncEnumerable();
+            return this.context.Films.AsNoTracking().OrderBy(f => f.Id).Skip(offset).Take(count).AsAsyncEnumerable();
         }
     }
 }
