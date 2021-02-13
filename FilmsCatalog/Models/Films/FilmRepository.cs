@@ -15,7 +15,7 @@ namespace FilmsCatalog.Models
             this.context = context;
         }
 
-        public async Task<Film> ReadAsync(int id)
+        public async Task<Film> ReadOrDefaultAsync(int id)
         {
             return await this.context.Films.AsNoTracking().FirstOrDefaultAsync(f => f.Id == id);
         }

@@ -49,7 +49,7 @@ namespace FilmsCatalog.Controllers
         [HttpGet]
         public async Task<IActionResult> DisplayFilm(int filmId)
         {
-            var film = await _repository.ReadAsync(filmId);
+            var film = await _repository.ReadOrDefaultAsync(filmId);
             if (film == null)
             {
                 return new BadRequestResult();
@@ -119,7 +119,7 @@ namespace FilmsCatalog.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateFilm(int filmId = 0)
         {
-            var film = await _repository.ReadAsync(filmId);
+            var film = await _repository.ReadOrDefaultAsync(filmId);
             if (film == null)
             {
                 return new BadRequestResult();
@@ -162,9 +162,15 @@ namespace FilmsCatalog.Controllers
                     }
                     break;
             }
+            
+            var film = await _repository.ReadOrDefaultAsync(model.Id);
+
+            if (film == null)
+            {
+                ModelState.AddModelError("Film", $"Фильм с id = {model.Id} не найден");
+            }
 
             var user = await _userManager.GetUserAsync(this.User);
-            var film = await _repository.ReadAsync(model.Id);
 
             if (user.Id != film.AuthorId)
             {
